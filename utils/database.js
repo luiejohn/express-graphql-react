@@ -1,17 +1,8 @@
-// const Sequelize = require("sequelize").Sequelize;
-
-// const sequelize = new Sequelize("node-db", "root", "sql123Xzaf", {
-//   dialect: "mysql",
-//   host: "localhost",
-//   operatorsAliases: false,
-// });
-
-// sequelize.module.exports = sequelize;
-
 const Sequelize = require("sequelize");
 const _ = require("lodash");
 const Faker = require("faker");
 
+//Change credentials as needed
 const sequelize = new Sequelize("node-db", "root", "sql123Xzaf", {
   dialect: "mysql",
   host: "localhost",
@@ -32,12 +23,6 @@ const User = sequelize.define("users", {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  //   email: {
-  //     type: Sequelize.STRING,
-  //     validate: {
-  //       isEmail: true,
-  //     },
-  //   },
 });
 
 const Property = sequelize.define("property", {
@@ -68,10 +53,11 @@ const Property = sequelize.define("property", {
   },
 });
 
-// Relations
+// Relationship
 User.hasMany(Property);
 Property.belongsTo(User);
 
+//Create 10 users and 10 properties
 sequelize.sync({ force: true }).then(() => {
   _.times(10, () => {
     return User.create({
